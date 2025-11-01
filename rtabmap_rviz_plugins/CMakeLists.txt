@@ -1,13 +1,7 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.20)
 project(rtabmap_rviz_plugins)
 
-# For rviz plugins, look for Qt5 before Qt4
-FIND_PACKAGE(Qt5 COMPONENTS Widgets Core Gui QUIET)
-IF(NOT Qt5_FOUND)
-    FIND_PACKAGE(Qt4 COMPONENTS QtCore QtGui REQUIRED)
-    INCLUDE(${QT_USE_FILE})
-ENDIF(NOT Qt5_FOUND)
-
+FIND_PACKAGE(Qt5 COMPONENTS Widgets Core Gui REQUIRED)
 
 find_package(catkin REQUIRED COMPONENTS
              roscpp sensor_msgs std_msgs pcl_conversions pluginlib rviz tf rtabmap_conversions rtabmap_msgs)
@@ -101,10 +95,10 @@ add_library(rtabmap_rviz_plugins
 )
 target_link_libraries(rtabmap_rviz_plugins
   ${Libraries}
+  Qt5::Core
+  Qt5::Widgets
+  Qt5::Gui
 )
-IF(Qt5_FOUND)
-    QT5_USE_MODULES(rtabmap_rviz_plugins Widgets Core Gui)
-ENDIF(Qt5_FOUND)
 
 #############
 ## Install ##
